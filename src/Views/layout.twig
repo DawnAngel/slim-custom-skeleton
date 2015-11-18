@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>{% block title %}{% endblock %} {{ app_name }}</title>
+
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Droid+Serif">
+
+        <link rel="stylesheet" type="text/css" href="{{ css_dir }}styles.css">
+
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="fa fa-bars fa-lg"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ urlFor('index') }}">{{ app_name }}</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li {% if oneIsActive is defined %}class="active"{% endif %}><a>One</a></li>
+                        <li {% if twoIsActive is defined %}class="active"{% endif %}><a>Two</a></li>
+                        <li {% if threeIsActive is defined %}class="active"{% endif %}><a>Three</a></li>
+                    </ul>
+                    <div class="btn-group navbar-right">
+                        <!-- <a href="#logout" role="button" class="btn btn-default navbar-btn">Sign Out <span class="fa fa-sign-out"></span></a> -->
+                        <a href="#login" role="button" class="btn btn-primary navbar-btn">Sign In <span class="fa fa-sign-in"></span></a>
+                        <a href="#register" role="button" class="btn btn-default navbar-btn">Register <span class="fa fa-file-text-o"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% if flash.autherror %}
+        <div class="row">
+            <div class="bg-danger img-rounded col-md-6 col-md-offset-3">
+                <p class="text-danger text-center"><strong>Authentication Required</strong><br>
+                    You must log in before accessing that location.</p>
+            </div>
+        </div>
+{% endif %}
+{% block content %}
+{% endblock %}
+       <footer id="footer">
+            <div class="container">
+                <div class="col-md-4">
+                    <p>Contact Stuff Here</p>
+                    <addr>123 Main Street<br>Anywhere, USA</addr>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="text-muted">Copyright &copy; 2014 {{ app_name }}</p>
+                </div>
+                <div class="col-md-4 text-right">
+                    <p>Social Links?</p>
+                    <p>Facebook<br>Twitter</p>
+                </div>
+            </div>
+        </footer>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="{{ js_dir }}footer.js"></script>
+{% block scripts %}
+{% endblock %}
+    </body>
+</html>

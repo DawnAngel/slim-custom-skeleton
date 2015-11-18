@@ -1,0 +1,85 @@
+{% extends "layout.twig" %}
+
+{% block title %}Forgot Login -{% endblock %}
+
+{% block content %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+{% if flash.foundUsername is defined %}
+                    <h1>Found it!</h1>
+                    <p>The username <strong>{{ flash.foundUsername }}</strong> is associated with email {{ flash.email }}.</p>
+                    <p><a href="{{ urlFor('login') }}">Sign in now?</a></p>
+{% elseif flash.resetPassword %}
+                    <h1>Password Reset</h1>
+                    <p>Your password has been reset. An email was sent to {{ flash.email }} with the new password and a link to log into the site.</p>
+{% else %}
+{% if flash.lookupError %}
+                    <div class="bg-danger img-rounded">
+                        <p class="text-danger text-center"><strong>That email address was not found!</strong></p>
+                    </div>
+{% endif %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title text-center">Forgot Username or Password</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form" method="POST">
+                                <input type="hidden" name="{{ csrf_key }}" value="{{ csrf_token }}">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-8">
+                                        <input id="email" name="email" type="email" class="form-control" placeholder="Enter Email" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 text-right">
+                                        <label class="control-label">Pick One</label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="lookupOptions" id="findUsername" value="findUsername" checked>
+                                                Lookup Username
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-sm-offset-4">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="lookupOptions" id="resetPassword" value="resetPassword">
+                                                Reset Password
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-4">
+                                        <button type="submit" id="submit" class="btn btn-primary">Lookup Username</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+        <script type="text/javascript">
+            $(function () {
+                $('#email').focus();
+
+                $('#findUsername').click(function ()
+                {
+                    $('#submit').text('Lookup Username');
+                });
+                $('#resetPassword').click(function ()
+                {
+                    $('#submit').text('Reset Password');
+                });
+            });
+        </script>
+{% endblock %}
